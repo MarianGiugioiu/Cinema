@@ -17,8 +17,9 @@ namespace Cinema.Controllers
         // GET: Recenzie
         public ActionResult Index(string searchString)
         {
-            var recenzii = from m in db.Recenzii
+            var recenzii = from m in db.Recenzii.Include("Film")
                          select m;
+            recenzii = recenzii.OrderByDescending(s => s.Nota);
 
             if (!String.IsNullOrEmpty(searchString))
             {
